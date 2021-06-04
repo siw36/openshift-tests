@@ -10,7 +10,9 @@ oc run \
   --image-pull-policy="Always" \
   --image=$(oc get is nginx-hello-world -o=go-template='{{ .status.dockerImageRepository}}') \
   nginx-hello-world
-while [[ $(oc get pods nginx-hello-world -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != "True" ]]; do echo "Waiting for pod..." && sleep 1; done
+while [[ $(oc get pods nginx-hello-world -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != "True" ]]; do
+  echo "Waiting for pod..." && sleep 1;
+done
 oc exec nginx-hello-world -- curl localhost:8080
 if [ $? -eq 0 ]; then
   echo "End to end build test successful!"
