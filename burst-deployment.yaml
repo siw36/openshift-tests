@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: burst
+  name: burst
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: burst
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: burst
+    spec:
+      nodeSelector:
+        lufthansatechnik.de/zone: burst
+      containers:
+      - image: registry.access.redhat.com/ubi8/nginx-120:latest
+        name: nginx-120
+        resources:
+          requests:
+            cpu: 1
+            memory: 2Gi
+          limits:
+            cpu: 1
+            memory: 2Gi
+        command: ["nginx", "-g", "daemon off;"]
+status: {}
